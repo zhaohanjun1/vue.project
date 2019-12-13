@@ -1,9 +1,6 @@
 <template>
-  <div class="footer-guide">
-    <span>
-
-      
-    </span>
+  <div>
+    Msite
   </div>
 </template>
 
@@ -14,5 +11,5 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 
-
+ 
 </style>

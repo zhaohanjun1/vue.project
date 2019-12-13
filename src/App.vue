@@ -1,15 +1,18 @@
 
 <template>
   <div>
-    <h1>App组件</h1>
+    <router-view></router-view>
+    <FooterGuide></FooterGuide>
   </div>
 </template>
 
 <script>
-
+  import FooterGuide from '@/components/FooterGuide/FooterGuide.vue'
 
 export default {
-  
+  components:{
+    FooterGuide
+  }
 }
 </script>
 
