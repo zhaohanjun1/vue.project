@@ -8,9 +8,13 @@
 
 <script>
   import FooterGuide from '@/components/FooterGuide/FooterGuide.vue'
+  export default {
 
+    async mounted (){
+      //通知action异步获取address并保存到state
+      this.$store.dispatch('getAddress')
+    },
 
-export default {
   components:{
     FooterGuide
   }
