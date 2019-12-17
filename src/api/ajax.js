@@ -3,7 +3,9 @@
 */
 import axios from 'axios'
 import qs from 'qs'
-import { Indicator }  from 'mint-ui'
+import { Indicator , Toast , MessageBox}  from 'mint-ui'
+import store from '@/vuex/store'
+import router from '@/router'
 
 const instance = axios.create({
   // baseURL: 'http://localhost:4 000',//出跨域请求问题
@@ -19,6 +21,13 @@ instance.interceptors.request.use((config)=>{
   if (data instanceof Object) {
     config.data = qs.stringify(data)
   }
+
+  //5.通过请求头携带token数据
+  const token = store.state.token
+  if (token){
+    config.headers['Authorization'] = token 
+  }
+
   return config
 })
 
@@ -33,9 +42,17 @@ instance.interceptors.response.use(
   },
   error => {
     Indicator.close()
+
+    //如果响应状态码是401，自动跳转到login页面
+    if (error.response.status===401) {
+      router.replace('./login')
+      Toast('登陆失效，请重新登陆')
+    }else{
+      //1.统一处理请求异常
+      MessageBox('提示','请求出错：' +error.message)
+    }
     // return Promise.request(error)
-    //1.统一处理请求异常
-    alert('请求出错：' +error.message)
+    
     return new Promise(()=> {})//返回一个pending状态的promise=>中断promise链
   }
 )

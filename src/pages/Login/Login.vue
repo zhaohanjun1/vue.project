@@ -66,6 +66,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import { Toast, MessageBox } from 'mint-ui'
   export default {
     name: 'Login',
     data (){
@@ -98,7 +99,7 @@
         },1000);
 
         //发送请求 ==> 发短信接口
-        const result = await this.$API.reqsendCode(this.phone)
+        const result = await this.$API.reqSendCode(this.phone)
         if (result.code===0) {
           Toast('短信发送成功！')
         }else{
@@ -135,7 +136,6 @@
             const user = result.data
             // 将user保存到vuex的state
             this.$store.dispatch('saveUser', user) // 将user和token保存到state, 将token保存local
-
             // 跳转到个人中心
             this.$router.replace({path: '/profile'})
           } else {

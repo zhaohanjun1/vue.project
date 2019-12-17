@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import 'lib-flexible'
+import {Button} from 'mint-ui'
 
 import App from './App.vue'
 import router from './router'

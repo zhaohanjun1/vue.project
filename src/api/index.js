@@ -7,7 +7,7 @@ import ajax from './ajax'
 
 export const reqAddress = (longitude,latitude) => ajax(`/position/${latitude},${longitude}`)
 
-// 2.获取视频分类列表
+// 2.获取食品分类列表
 export const reqCategorys = ()=>ajax('/index_category')
 
 // 3.根据经纬度获取商铺列表
@@ -21,3 +21,4 @@ export const reqSendCode = (phone) => ajax.get('/sendcode',{
 
 export const reqPwdLogin = ({name, pwd, captcha}) => ajax.post('/login_pwd',{name, pwd, captcha})
 export const reqSmsLogin = ({phone,code}) => ajax.post('/login_sms',{phone,code})
+export const reqAutoLogin = () => ajax.get('/auto_login')
