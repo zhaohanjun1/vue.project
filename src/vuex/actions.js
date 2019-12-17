@@ -32,13 +32,14 @@ export default{
   /*
   获取商品分类数组的异步action
   */
-  async getCategorys({commit}){
+  async getCategorys({commit}, callback){
     //发异步请求
     const result = await reqCategorys()
     //请求成功后，提交给mutation
     if(result.code===0){
       const categorys = result.data
       commit(RECEIVE_CATEGORYS,categorys)
+      typeof callback === 'function' && callback()
   }
 },
   /*
