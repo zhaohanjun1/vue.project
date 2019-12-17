@@ -87,28 +87,39 @@
     },
 
     methods:{
-      sendCode (){
+      async sendCode (){
         this.computeTime = 10
-        const intervalID = setInterval(()=>{
+        const intervalId = setInterval(()=>{
           this.computeTime --
+          //当计时为零停止计时
           if (this.computeTime===0) {
-            clearInterval(intervalID)
+            clearInterval(intervalId)
           }
-        },1000)
+        },1000);
+
+        //发送请求 ==> 发短信接口
+        const result = await this.$API.reqsendCode(this.phone)
+        if (result.code===0) {
+          Toast('短信发送成功！')
+        }else{
+          this.computeTime = 0
+          MessageBox('提示',result.msg);
+        }
+
       },
 
       async login (){
-        let name
+        let names
         if (this.isShowSms) {
           names = ['phone','code']
         }else{
-          name = ['name','pwd','captcha']
+          names = ['name','pwd','captcha']
         }
 
         const success = await this.$validator.validateAll(names)
         let result
         if (success) {
-    const {isShowSms, phone, code, name, pwd, captcha} = this
+        const {isShowSms, phone, code, name, pwd, captcha} = this
           if (isShowSms) {
             // 短信登陆
             result = await this.$API.reqSmsLogin({phone, code})
