@@ -147,7 +147,7 @@
       //   })
       // })
       this.$store.dispatch('getShops')
-      this.$store.dispatch('getCategorys')
+      await this.$store.dispatch('getCategorys')
       new Swiper ('.swiper-container',{
         loop: true,//循环模式
         //如果需要分页器

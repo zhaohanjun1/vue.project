@@ -5,7 +5,7 @@ import App from './App.vue'
 import router from './router'
 import Header from './components/Header/Header.vue'
 import store from './vuex/store'
-// import './validate'
+import './validate'
 
 //注册全局标签
 Vue.component('Header',Header)
