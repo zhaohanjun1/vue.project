@@ -24,10 +24,19 @@ instance.interceptors.request.use((config)=>{
 
   //5.通过请求头携带token数据
   const token = store.state.token
+  
+  
+  //有token就携带
   if (token){
     config.headers['Authorization'] = token 
+  } else{
+    //如果当前接口需要token校验，但没有token，不发请求，进入错误流程
+    const needCheck = config.headers.needCheck
+    //如果没token，但又需要token检验，不能发请求
+    if (needCheck) {
+      throw new Error('没有登陆，不能请求！')
+    }
   }
-
   return config
 })
 
@@ -41,16 +50,35 @@ instance.interceptors.response.use(
     return response.data
   },
   error => {
+    //隐藏请求loading
     Indicator.close()
+    const response = error.response
+    //没法请求的错误
+    if (!response) {
+      const path = router.currentRoute.path
+      if (path!=='/login') {
+        router.replace('/login')
+        Toast(error.message)   
+      }
 
-    //如果响应状态码是401，自动跳转到login页面
-    if (error.response.status===401) {
-      router.replace('./login')
-      Toast('登陆失效，请重新登陆')
-    }else{
-      //1.统一处理请求异常
-      MessageBox('提示','请求出错：' +error.message)
+    }else{//发了请求的错误
+    //如果响应状态码是401，且当前没在登陆页面，退出登陆(清除数据/跳到登陆界面)
+      if (error.response.status===401) {
+        const path = router.currentRoute.path
+        if (path!=='/login') {
+          store.dispatch('logout')
+          router.replace('/login')
+          Toast(error.response.data.message || '登陆失效，请重新登陆')
+        }
+          return
+      }else if (error.response.status === 404) {
+        MessageBox('提示','访问的资源不存在')
+      }else{
+        //1.统一处理请求异常
+        MessageBox('提示','请求出错：' +error.message)
+      }
     }
+    
     // return Promise.request(error)
     
     return new Promise(()=> {})//返回一个pending状态的promise=>中断promise链

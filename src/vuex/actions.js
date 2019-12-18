@@ -14,7 +14,10 @@ import {
   RECEIVE_CATEGORYS,
   RECEIVE_SHOPS,
   RECEIVE_TOKEN,
-  RECEIVE_USER
+  RECEIVE_USER,
+  RESET_USER,
+  RESET_TOKEN
+
 } from './mutation-types'
 
 export default{
@@ -52,6 +55,8 @@ export default{
 
     if (state.token && !state.user._id) {
       const result = await reqAutoLogin()
+      console.log(result);
+      
       if (result.code===0) {
         const user = result.data
         commit(RECEIVE_USER,{user})
@@ -59,6 +64,13 @@ export default{
     }
   
   },
+
+  logout({commit}){
+    localStorage.removeItem('token_key')
+    commit(RESET_USER)
+    commit(RESET_TOKEN)
+  },
+
   /*
   获取商品分类数组的异步action
   */
