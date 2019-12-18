@@ -74,28 +74,34 @@
         </div>
       </a>
     </section>
-    <section class="profile_my_order border-1px">
-      <!-- 服务中心 -->
-      <a href="javascript:" class="my_order">
-        <span>
-          <i class="iconfont icon-fuwu"></i>
-        </span>
-        <div class="my_order_div">
-          <span>服务中心</span>
-          <span class="my_order_icon">
-            <i class="iconfont icon-jiantou1"></i>
-          </span>
-        </div>
-      </a>
+    <section class="profile_my_order border-1px" v-show="user._id">
+      <mt-button style="width:100%" type="danger" @click="logout">退出登陆</mt-button>
     </section>
   </section>
 </template>
 
 <script type="text/ecmascript-6">
   import {mapState} from 'vuex'
+  import {MessageBox} from 'mint-ui'
+
   export default {
     computed:{
       ...mapState(['user'])
+    },
+
+    methods:{
+      logout(){
+        MessageBox.confirm('确定执行此操作？').then(
+          ()=>{// 点击确认
+            this.$store.dispatch('logout')
+          },
+          ()=>{// 点击取消
+            console.log('点击取消');
+            
+          },
+
+        )
+      }
     }
   }
 </script>

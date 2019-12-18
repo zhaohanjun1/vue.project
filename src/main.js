@@ -14,6 +14,7 @@ Vue.prototype.$API = API
 //注册全局标签
 Vue.component('Header',Header)
 Vue.component('Star',Star)
+Vue.component(Button.name,Button)
 
 
 new Vue({
