@@ -9,6 +9,8 @@ import Star from './components/Star/Star.vue'
 import store from './vuex/store'
 import './validate'
 import * as API from '@/api'
+import i18n from './i18n'
+import './mock/mock-server'
 
 Vue.prototype.$API = API
 //注册全局标签
@@ -19,6 +21,12 @@ Vue.component(Button.name,Button)
 
 new Vue({
   render: h => h(App),
-  router,//所有组件都能看到 $router <router-link>he <router-view>
-  store,//所欲组件都能看到：$store
+
+  //所有组件都能看到 $router <router-link>he <router-view>
+  router,
+
+  i18n,
+
+  //所欲组件都能看到：$store
+  store
 }).$mount('#app')

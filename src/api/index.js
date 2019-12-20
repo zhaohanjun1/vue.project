@@ -32,3 +32,7 @@ export const reqSendCode = (phone) => ajax.get('/sendcode',{
 export const reqPwdLogin = ({name, pwd, captcha}) => ajax.post('/login_pwd',{name, pwd, captcha})
 export const reqSmsLogin = ({phone,code}) => ajax.post('/login_sms',{phone,code})
 export const reqAutoLogin = () => ajax.get('/auto_login')
+
+export const reqGoods = () => ajax('/goods')
+export const reqRatings = () => ajax('/ratings')
+export const reqInfo = () => ajax('/info')
